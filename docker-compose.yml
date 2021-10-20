@@ -1,0 +1,20 @@
+version: '3.4'
+services:
+  rasa:
+    image: rasa/rasa:2.8.9-full
+    networks: ['network-bot-1']
+    ports:
+     - 5056:5005
+    volumes:
+     - ./:/app
+    container_name: rasa-bot-1
+    command: run -m models --endpoints endpoints.yml
+  action-server:
+    image: rasa/rasa-sdk:2.8.2
+    networks: ['network-bot-1']
+    volumes:
+     - "./actions:/app/actions"
+    ports:
+     - 5058:5055
+    container_name: action-server-bot-1
+networks: {network-bot-12: {}}
